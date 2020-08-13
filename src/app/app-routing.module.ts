@@ -1,3 +1,5 @@
+import { SecureInnerGuard } from './secure-inner.guard';
+import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -8,11 +10,8 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent,
-  canActivate: [AngularFireAuthGuard],
-  data: {authGuardPipe: redirectUnauthorizedToLogin}
-  }
+  {path: 'login', component: LoginComponent, canActivate: [SecureInnerGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({ 

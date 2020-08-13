@@ -4,9 +4,12 @@ import { AngularFireModule } from '@angular/fire'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { from } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
+import  { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard'
+import { SecureInnerGuard } from './secure-inner.guard'
 
 
 @NgModule({
@@ -19,10 +22,11 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule,
     NgbModule,
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, SecureInnerGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
